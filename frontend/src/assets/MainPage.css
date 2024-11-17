@@ -1,0 +1,10 @@
+.container-base{
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: #9a0002;
+}
+
+.container-base h1,
+.container-base h2{
+    color: #fbf7f6;
+}
