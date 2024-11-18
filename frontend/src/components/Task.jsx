@@ -1,9 +1,10 @@
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import { useState } from 'react';
 import '../assets/Task.css'
 
 const Task = (props) => {
 
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [editClicked, setIsEditClicked] = useState(false);
     const [form, setForm] = useState({
         name: props.name,
@@ -43,7 +44,7 @@ const Task = (props) => {
                 </Col>
                 <Col xs={2}>
                     <Button onClick={() => setIsEditClicked(!editClicked)} className='me-3 btn-primary'><i class="bi bi-pencil-square fs-5" /></Button>
-                    <Button className='btn-danger'><i class="bi bi-x-square fs-5" /></Button>
+                    <Button onClick={() => setShowDeleteModal(true)} className='btn-danger'><i class="bi bi-x-square fs-5" /></Button>
                 </Col>
             </Container>
         
@@ -85,6 +86,26 @@ const Task = (props) => {
                 :
                 null
             }
+
+            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirmação de Exclusão</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Tem certeza de que deseja excluir a tarefa "{props.name}"?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+                    Cancelar
+                    </Button>
+                    <Button variant="danger" onClick={() => {
+                        console.log(`Excluindo a tarefa: ${props.name}`);
+                        setShowDeleteModal(false);
+                    }}>
+                    Confirmar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     )
 }
