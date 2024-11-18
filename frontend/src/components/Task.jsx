@@ -1,5 +1,6 @@
 import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import { useState } from 'react';
+import axios from 'axios';
 import '../assets/Task.css'
 
 const Task = (props) => {
@@ -32,6 +33,24 @@ const Task = (props) => {
             ...form,
             [ev.target.name]: ev.target.value
         });
+    };
+
+    const handleUpdateTask = async () => {
+        try {
+            await axios.patch(`http://localhost:5000/${props.id}`, {
+                name: form.name,
+                cost: form.cost,
+                deadline: form.deadline
+            });
+
+            props.setTasks(prevTasks => prevTasks.map(task => 
+                task.id === props.id ? { ...task, ...form } : task
+            ));
+
+            setIsEditClicked(false);
+        } catch (error) {
+            console.error('Erro ao atualizar a tarefa:', error);
+        }
     };
 
     return(
@@ -71,7 +90,7 @@ const Task = (props) => {
 
                     <Row className='pt-1 pb-2'>
                         <Col className='d-flex justify-content-end'>
-                            <Button className='btn-success'>
+                            <Button className='btn-success' onClick={handleUpdateTask}>
                                 <i class="bi bi-plus-square fs-5" />
                             </Button>
                         </Col>
