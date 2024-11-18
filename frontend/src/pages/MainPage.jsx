@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import Task from '../components/Task';
 import axios from 'axios';
 import '../assets/MainPage.css';
@@ -28,6 +28,7 @@ const MainPage = () => {
             {tasks.map((task) => (
                 <Task name={task.name} cost={task.cost} deadline={task.deadline}/>
             ))}
+            <Button className='btn-success w-25 py-2 mt-2'>Adicionar</Button>
         </Container>
     )
 }

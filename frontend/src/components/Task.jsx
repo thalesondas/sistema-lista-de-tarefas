@@ -1,4 +1,4 @@
-import { Container } from 'react-bootstrap';
+import { Button, Col, Container } from 'react-bootstrap';
 import '../assets/Task.css'
 
 const Task = (props) => {
@@ -15,10 +15,16 @@ const Task = (props) => {
     }).format(props.cost);
 
     return(
-        <Container className='container-task my-3 py-3 w-75 fs-4 d-flex justify-content-evenly'>
-            <span>{props.name}</span>
-            <span>{cost}</span>
-            <span>{deadline}</span>
+        <Container xs={10} className='container-task my-3 py-3 w-75 fs-4 d-flex justify-content-evenly'>
+            <Col className='d-flex justify-content-evenly'>
+                <span>{props.name}</span>
+                <span>{cost}</span>
+                <span>{deadline}</span>
+            </Col>
+            <Col xs={2}>
+                <Button className='me-2 btn-warning'>Editar</Button>
+                <Button className='btn-danger'>Excluir</Button>
+            </Col>
         </Container>
     )
 }
