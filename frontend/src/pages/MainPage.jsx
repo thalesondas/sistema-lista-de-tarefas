@@ -41,12 +41,12 @@ const MainPage = () => {
             <h1 className='py-4'>Desafio FATTO</h1>
             <h2 className='pb-2'>Lista de Tarefas</h2>
             {tasks.map((task) => (
-                <Task name={task.name} cost={task.cost} deadline={task.deadline}/>
+                <Task id={task.id} name={task.name} cost={task.cost} deadline={task.deadline}/>
             ))}
 
             {isAddClicked ? 
             
-                <Container className='position-relative mt-2 w-75 bg-white'>
+                <Container className='position-relative mt-4 w-75 bg-white'>
 
                     <h4 className='mt-2 d-flex justify-content-center'>Adicionar Nova Tarefa</h4>
 
@@ -63,7 +63,7 @@ const MainPage = () => {
 
                         <Col xs={4} className='px-2'>
                             <Form.Label className='fw-bold'>Data Limite</Form.Label>
-                            <Form.Control type='date' name='deadline' value={addForm.deadlinee} onChange={handleFormChange} />
+                            <Form.Control type='date' name='deadline' value={addForm.deadline} onChange={handleFormChange} />
                         </Col>
 
                     </Form.Group>
@@ -84,7 +84,7 @@ const MainPage = () => {
 
                 </Container>
                 :
-                <Button className='btn-success w-25 py-2 mt-2' onClick={() => setIsAddClicked(true)}>
+                <Button className='btn-success w-25 py-2 mt-4' onClick={() => setIsAddClicked(true)}>
                     <i class="bi bi-plus-square fs-4"></i>
                 </Button>
             }
