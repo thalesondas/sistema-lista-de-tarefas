@@ -15,15 +15,15 @@ const Task = (props) => {
     }).format(props.cost);
 
     return(
-        <Container xs={10} className='container-task my-3 py-3 w-75 fs-4 d-flex justify-content-evenly'>
+        <Container xs={10} className='container-task my-3 py-3 w-75 fs-4 d-flex justify-content-evenly align-items-center'>
             <Col className='d-flex justify-content-evenly'>
                 <span>{props.name}</span>
                 <span>{cost}</span>
                 <span>{deadline}</span>
             </Col>
             <Col xs={2}>
-                <Button className='me-2 btn-warning'>Editar</Button>
-                <Button className='btn-danger'>Excluir</Button>
+                <Button className='me-3 btn-warning'><i class="bi bi-pencil-square fs-5"></i></Button>
+                <Button className='btn-danger'><i class="bi bi-x-square fs-5"></i></Button>
             </Col>
         </Container>
     )

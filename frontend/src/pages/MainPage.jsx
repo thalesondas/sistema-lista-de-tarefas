@@ -28,7 +28,7 @@ const MainPage = () => {
             {tasks.map((task) => (
                 <Task name={task.name} cost={task.cost} deadline={task.deadline}/>
             ))}
-            <Button className='btn-success w-25 py-2 mt-2'>Adicionar</Button>
+            <Button className='btn-success w-25 py-2 mt-2'><i class="bi bi-plus-square fs-4"></i></Button>
         </Container>
     )
 }
