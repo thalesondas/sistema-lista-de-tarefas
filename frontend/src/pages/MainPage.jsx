@@ -25,8 +25,7 @@ const MainPage = () => {
     const [addForm, setAddForm] = useState({
         name: '',
         cost: '',
-        deadline: '',
-        order: ''
+        deadline: ''
     });
 
     const handleFormChange = (ev) => {
@@ -34,6 +33,26 @@ const MainPage = () => {
             ...addForm,
             [ev.target.name]: ev.target.value
         });
+    };
+
+    const handleSubmit = async (ev) => {
+        ev.preventDefault();
+    
+        try {
+            const response = await axios.post('http://localhost:5000/', addForm);
+
+            setTasks([...tasks, response.data]);
+
+            setAddForm({
+                name: '',
+                cost: '',
+                deadline: ''
+            })
+
+            setIsAddClicked(false);
+        } catch (err) {
+            console.error('Erro ao adicionar a tarefa:', err);
+        }
     };
 
     return(
@@ -46,11 +65,11 @@ const MainPage = () => {
 
             {isAddClicked ? 
             
-                <Container className='position-relative mt-4 w-75 bg-white'>
+                <Container className='mb-5 mt-4 w-75 bg-white'>
 
                     <h4 className='mt-2 d-flex justify-content-center'>Adicionar Nova Tarefa</h4>
 
-                    <Form.Group className='my-2 d-flex flex-row'>
+                    <Form.Group className='my-2 d-flex flex-row' onSubmit={handleSubmit}>
                         <Col xs={4} className='px-2'>
                             <Form.Label className='fw-bold'>Nome</Form.Label>
                             <Form.Control type='text' name='name' value={addForm.name} onChange={handleFormChange} />
@@ -70,13 +89,13 @@ const MainPage = () => {
 
                     <Row className='pt-1 pb-2'>
                         <Col className='d-flex justify-content-end'>
-                            <Button className='btn-success'>
+                            <Button className='btn-success' onClick={handleSubmit}>
                                 <i class="bi bi-plus-square fs-5" />
                             </Button>
                         </Col>
                         
                         <Col className='d-flex justify-content-start'>
-                            <Button className='btn-danger' onClick={() => setIsAddClicked(false)}>
+                            <Button className='btn-secondary' onClick={() => setIsAddClicked(false)}>
                                 <i class="bi bi-x-square fs-5" />
                             </Button>
                         </Col>
@@ -84,7 +103,7 @@ const MainPage = () => {
 
                 </Container>
                 :
-                <Button className='btn-success w-25 py-2 mt-4' onClick={() => setIsAddClicked(true)}>
+                <Button className='btn-success w-25 py-2 mt-4 mb-5' onClick={() => setIsAddClicked(true)}>
                     <i class="bi bi-plus-square fs-4"></i>
                 </Button>
             }
