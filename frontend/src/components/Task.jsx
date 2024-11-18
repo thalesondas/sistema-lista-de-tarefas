@@ -53,6 +53,18 @@ const Task = (props) => {
         }
     };
 
+    const handleDeleteTask = async () => {
+        try {
+            await axios.delete(`http://localhost:5000/${props.id}`);
+            
+            props.setTasks(prevTasks => prevTasks.filter(task => task.id !== props.id));
+
+            setShowDeleteModal(false);
+        } catch (error) {
+            console.error('Erro ao excluir a tarefa:', error);
+        }
+    };
+
     return(
         <>
             <Container xs={10} className={`mt-3 py-3 w-75 fs-4 d-flex align-items-center ${moreThan1000() ? "bg-warning" : "container-task"}`}>
@@ -67,8 +79,7 @@ const Task = (props) => {
                 </Col>
             </Container>
         
-            {editClicked ?
-            
+            {editClicked && (
                 <Container className={`w-75 ${moreThan1000() ? "bg-warning" : "container-task"}`}>
                     <hr />
                     <Form.Group className='mt-4 mb-2 d-flex flex-row'>
@@ -101,10 +112,8 @@ const Task = (props) => {
                             </Button>
                         </Col>
                     </Row> 
-                </Container>
-                :
-                null
-            }
+                </Container>   
+            )}
 
             <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
                 <Modal.Header closeButton>
@@ -115,13 +124,10 @@ const Task = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
-                    Cancelar
+                        Cancelar
                     </Button>
-                    <Button variant="danger" onClick={() => {
-                        console.log(`Excluindo a tarefa: ${props.name}`);
-                        setShowDeleteModal(false);
-                    }}>
-                    Confirmar
+                    <Button variant="danger" onClick={handleDeleteTask}>
+                        Confirmar
                     </Button>
                 </Modal.Footer>
             </Modal>
