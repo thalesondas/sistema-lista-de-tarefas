@@ -60,7 +60,16 @@ const MainPage = () => {
             <h1 className='py-4'>Desafio FATTO</h1>
             <h2 className='pb-2'>Lista de Tarefas</h2>
             {tasks.map((task) => (
-                <Task key={task.id} id={task.id} name={task.name} cost={task.cost} deadline={task.deadline} setTasks={setTasks}/>
+                <Task
+                    key={task.id}
+                    id={task.id}
+                    name={task.name}
+                    cost={task.cost}
+                    deadline={task.deadline}
+                    order={task.order}
+                    setTasks={setTasks}
+                    tasks={tasks}
+                />
             ))}
 
             {isAddClicked ? 

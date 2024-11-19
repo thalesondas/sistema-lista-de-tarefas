@@ -1,4 +1,4 @@
-const { Task } = require("../models");
+const { Task } = require('../models');
 
 module.exports = {
 
@@ -48,4 +48,37 @@ module.exports = {
       res.status(500).json({ error: "Falha ao deletar tarefa" });
     }
   },
+
+  async updateOrder(req, res) {
+    const { currentId, targetId } = req.body;
+
+    if (!currentId || !targetId) {
+        return res.status(400).json({ error: 'IDs inválidos' });
+    }
+
+    try {
+        // Encontrar as tarefas
+        const currentTask = await Task.findByPk(currentId);
+        const targetTask = await Task.findByPk(targetId);
+
+        if (!currentTask || !targetTask) {
+            return res.status(404).json({ error: 'Tarefa(s) não encontrada(s)' });
+        }
+
+        // Trocar as ordens
+        const tempOrder = currentTask.order;
+        currentTask.order = targetTask.order;
+        targetTask.order = tempOrder;
+
+        // Salvar as atualizações
+        await currentTask.save();
+        await targetTask.save();
+        
+        return res.status(200).json({ message: 'Ordem atualizada com sucesso' });
+    } catch (error) {
+        await transaction.rollback(); // Reverter alterações em caso de erro
+        console.error('Erro ao atualizar ordem:', error);
+        return res.status(500).json({ error: 'Erro no servidor' });
+    }
+  }
 };
