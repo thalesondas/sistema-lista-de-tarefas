@@ -67,15 +67,19 @@ const Task = (props) => {
 
     return(
         <>
-            <Container xs={10} className={`mt-3 py-3 w-75 fs-4 d-flex align-items-center ${moreThan1000() ? "bg-warning" : "container-task"}`}>
+            <Container xs={9} className={`mt-3 py-3 w-75 fs-4 d-flex align-items-center ${moreThan1000() ? "bg-warning" : "container-task"}`}>
                 <Col className='d-flex justify-content-evenly'>
                     <span>{props.name}</span>
                     <span>{cost}</span>
                     <span>{deadline}</span>
                 </Col>
                 <Col xs={2}>
-                    <Button onClick={() => setIsEditClicked(!editClicked)} className='me-3 btn-primary'><i class="bi bi-pencil-square fs-5" /></Button>
-                    <Button onClick={() => setShowDeleteModal(true)} className='btn-danger'><i class="bi bi-x-square fs-5" /></Button>
+                    <Button onClick={() => setIsEditClicked(!editClicked)} className='me-3 btn-primary'><i className="bi bi-pencil-square fs-5" /></Button>
+                    <Button onClick={() => setShowDeleteModal(true)} className='btn-danger'><i className="bi bi-x-square fs-5" /></Button>
+                </Col>
+                <Col className='d-flex justify-content-end' xs={1}>
+                    <span><i className="bi bi-arrow-up-short fs-3"></i></span>
+                    <span><i className="bi bi-arrow-down-short fs-3"></i></span>
                 </Col>
             </Container>
         
@@ -102,13 +106,13 @@ const Task = (props) => {
                     <Row className='pt-1 pb-2'>
                         <Col className='d-flex justify-content-end'>
                             <Button className='btn-success' onClick={handleUpdateTask}>
-                                <i class="bi bi-plus-square fs-5" />
+                                <i className="bi bi-plus-square fs-5" />
                             </Button>
                         </Col>
                         
                         <Col className='d-flex justify-content-start'>
                             <Button className='btn-danger' onClick={() => setIsEditClicked(false)}>
-                                <i class="bi bi-x-square fs-5" />
+                                <i className="bi bi-x-square fs-5" />
                             </Button>
                         </Col>
                     </Row> 

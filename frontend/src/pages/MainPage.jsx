@@ -60,7 +60,7 @@ const MainPage = () => {
             <h1 className='py-4'>Desafio FATTO</h1>
             <h2 className='pb-2'>Lista de Tarefas</h2>
             {tasks.map((task) => (
-                <Task id={task.id} name={task.name} cost={task.cost} deadline={task.deadline} setTasks={setTasks}/>
+                <Task key={task.id} id={task.id} name={task.name} cost={task.cost} deadline={task.deadline} setTasks={setTasks}/>
             ))}
 
             {isAddClicked ? 
@@ -90,13 +90,13 @@ const MainPage = () => {
                     <Row className='pt-1 pb-2'>
                         <Col className='d-flex justify-content-end'>
                             <Button className='btn-success' onClick={handleSubmit}>
-                                <i class="bi bi-plus-square fs-5" />
+                                <i className="bi bi-plus-square fs-5" />
                             </Button>
                         </Col>
                         
                         <Col className='d-flex justify-content-start'>
                             <Button className='btn-secondary' onClick={() => setIsAddClicked(false)}>
-                                <i class="bi bi-x-square fs-5" />
+                                <i className="bi bi-x-square fs-5" />
                             </Button>
                         </Col>
                     </Row>
@@ -104,7 +104,7 @@ const MainPage = () => {
                 </Container>
                 :
                 <Button className='btn-success w-25 py-2 mt-4 mb-5' onClick={() => setIsAddClicked(true)}>
-                    <i class="bi bi-plus-square fs-4"></i>
+                    <i className="bi bi-plus-square fs-4"></i>
                 </Button>
             }
         </Container>

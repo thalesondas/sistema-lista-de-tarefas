@@ -1,3 +1,9 @@
 .container-task{
     background-color: #fbf7f6;
 }
+
+span i.bi-arrow-up-short:hover,
+span i.bi-arrow-down-short:hover{
+    color: grey;
+    cursor: pointer;
+}
