@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import Task from '../components/Task';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import axios from 'axios';
 import '../assets/MainPage.css';
 
@@ -59,18 +61,22 @@ const MainPage = () => {
         <Container className='container-base d-flex flex-column justify-content-start align-items-center'>
             <h1 className='py-4'>Desafio FATTO</h1>
             <h2 className='pb-2'>Lista de Tarefas</h2>
-            {tasks.map((task) => (
-                <Task
-                    key={task.id}
-                    id={task.id}
-                    name={task.name}
-                    cost={task.cost}
-                    deadline={task.deadline}
-                    order={task.order}
-                    setTasks={setTasks}
-                    tasks={tasks}
-                />
-            ))}
+            
+            <DndProvider backend={HTML5Backend}>
+                {tasks.map((task, index) => (
+                    <Task
+                        key={task.id}
+                        index={index}
+                        id={task.id}
+                        name={task.name}
+                        cost={task.cost}
+                        deadline={task.deadline}
+                        order={task.order}
+                        setTasks={setTasks}
+                        tasks={tasks}
+                    />
+                ))}
+            </DndProvider>
 
             {isAddClicked ? 
             

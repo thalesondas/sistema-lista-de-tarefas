@@ -1,5 +1,6 @@
 import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import { useState } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 import axios from 'axios';
 import '../assets/Task.css'
 
@@ -113,9 +114,48 @@ const Task = (props) => {
         }
     };
 
+    // Drag-and-Drop Hooks
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: 'TASK',
+        item: { id: props.id, index: props.index }, // Passando o ID e o índice da tarefa
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    }));
+
+    const [, drop] = useDrop(() => ({
+        accept: 'TASK',
+        hover: (draggedItem) => {
+            if (draggedItem.index !== props.index) {
+                const updatedTasks = [...props.tasks];
+
+                // Removendo a tarefa arrastada
+                const [movedTask] = updatedTasks.splice(draggedItem.index, 1);
+                // Inserindo no novo índice
+                updatedTasks.splice(props.index, 0, movedTask);
+
+                // Atualizando o estado global
+                props.setTasks(updatedTasks);
+
+                // Atualizando o índice da tarefa arrastada
+                draggedItem.index = props.index;
+            }
+        },
+    }));
+
+    const taskStyle = {
+        opacity: isDragging ? 0.5 : 1,
+        cursor: 'move'
+    };
+
     return(
         <>
-            <Container xs={9} className={`mt-3 py-3 w-75 fs-4 d-flex align-items-center ${moreThan1000() ? "bg-warning" : "container-task"}`}>
+            <Container
+                ref={(node) => drag(drop(node))}
+                style={taskStyle}
+                xs={9}
+                className={`mt-3 py-3 w-75 fs-4 d-flex align-items-center ${moreThan1000() ? "bg-warning" : "container-task"}`}
+            >
                 <Col className='d-flex justify-content-evenly'>
                     <span>{props.name}</span>
                     <span>{cost}</span>
