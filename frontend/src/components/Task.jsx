@@ -102,8 +102,8 @@ const Task = (props) => {
     
             // Atualizar o backend
             await axios.patch('http://localhost:5000/updateOrder', {
-                task1: { id: props.id, order: nextTask.order },
-                task2: { id: nextTask.id, order: props.order },
+                currentId: props.id,
+                targetId: nextTask.id
             });
     
             // Atualizar o estado global
