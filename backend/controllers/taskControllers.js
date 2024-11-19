@@ -14,7 +14,11 @@ module.exports = {
   async createTask(req, res) {
     try {
       const { name, cost, deadline } = req.body;
-      const order = await Task.count() + 1;
+      
+      // Encontrar o maior valor de 'order' existente e definir o próximo
+      const maxOrder = await Task.max('order'); // Pega o maior valor de 'order'
+      const order = await maxOrder ? maxOrder + 1 : 1; // Se não houver valor, começa com 1
+
       const task = await Task.create({ name, cost, deadline, order });
       res.status(201).json(task);
     } catch (error) {
