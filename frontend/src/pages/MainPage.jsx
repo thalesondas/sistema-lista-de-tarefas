@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
-import Task from '../components/Task';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import axios from 'axios';
+import Task from '../components/Task';
 import '../assets/MainPage.css';
 
 const MainPage = () => {
@@ -27,7 +27,8 @@ const MainPage = () => {
     const [addForm, setAddForm] = useState({
         name: '',
         cost: '',
-        deadline: ''
+        deadline: '',
+        status: ''
     });
 
     const handleFormChange = (ev) => {
@@ -57,26 +58,57 @@ const MainPage = () => {
         }
     };
 
+    // Drag and drop
+    const handleDragEnd = async (ev) => {
+        const { active, over } = ev;
+
+        if (!over || active.id === over.id) return;
+
+        const oldIndex = tasks.findIndex((task) => task.id === active.id);
+        const newIndex = tasks.findIndex((task) => task.id === over.id);
+
+        if (oldIndex === -1 || newIndex === -1) return;
+
+        const newTasks = arrayMove(tasks, oldIndex, newIndex);
+
+        // Atualizar localmente a ordem
+        setTasks(newTasks);
+
+        // Enviar para o backend a nova ordem
+        try {
+            await axios.patch('http://localhost:5000/updateOrder', {
+                tasks: newTasks.map(({ id, order }, index) => ({
+                    id,
+                    order: index,
+                })),
+            });
+        } catch (error) {
+            console.error('Erro ao atualizar a ordem no backend:', error);
+        }
+    };
+
+
     return(
         <Container className='container-base d-flex flex-column justify-content-start align-items-center'>
             <h1 className='py-4'>Desafio FATTO</h1>
             <h2 className='pb-2'>Lista de Tarefas</h2>
             
-            <DndProvider backend={HTML5Backend}>
-                {tasks.map((task, index) => (
-                    <Task
-                        key={task.id}
-                        index={index}
-                        id={task.id}
-                        name={task.name}
-                        cost={task.cost}
-                        deadline={task.deadline}
-                        order={task.order}
-                        setTasks={setTasks}
-                        tasks={tasks}
-                    />
-                ))}
-            </DndProvider>
+            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} >
+                <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
+                    {tasks.map((task, index) => (
+                        <Task
+                            key={task.id}
+                            id={task.id}
+                            name={task.name}
+                            cost={task.cost}
+                            deadline={task.deadline}
+                            order={task.order}
+                            tasks={tasks}
+                            setTasks={setTasks}
+                        />
+                    ))}
+                </SortableContext>
+            </DndContext>
 
             {isAddClicked ? 
             

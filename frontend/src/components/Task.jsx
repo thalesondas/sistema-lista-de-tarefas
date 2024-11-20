@@ -1,10 +1,18 @@
 import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import { useState } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import axios from 'axios';
 import '../assets/Task.css'
 
 const Task = (props) => {
+
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [editClicked, setIsEditClicked] = useState(false);
@@ -114,66 +122,34 @@ const Task = (props) => {
         }
     };
 
-    // Drag-and-Drop Hooks
-    const [{ isDragging }, drag] = useDrag(() => ({
-        type: 'TASK',
-        item: { id: props.id, index: props.index }, // Passando o ID e o índice da tarefa
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
-        }),
-    }));
-
-    const [, drop] = useDrop(() => ({
-        accept: 'TASK',
-        hover: (draggedItem) => {
-            if (draggedItem.index !== props.index) {
-                const updatedTasks = [...props.tasks];
-
-                // Removendo a tarefa arrastada
-                const [movedTask] = updatedTasks.splice(draggedItem.index, 1);
-                // Inserindo no novo índice
-                updatedTasks.splice(props.index, 0, movedTask);
-
-                // Atualizando o estado global
-                props.setTasks(updatedTasks);
-
-                // Atualizando o índice da tarefa arrastada
-                draggedItem.index = props.index;
-            }
-        },
-    }));
-
-    const taskStyle = {
-        opacity: isDragging ? 0.5 : 1,
-        cursor: 'move'
-    };
-
     return(
         <>
-            <Container
-                ref={(node) => drag(drop(node))}
-                style={taskStyle}
-                xs={9}
-                className={`mt-3 py-3 w-75 fs-4 d-flex align-items-center ${moreThan1000() ? "bg-warning" : "container-task"}`}
-            >
-                <Col className='d-flex justify-content-evenly'>
-                    <span>{props.name}</span>
-                    <span>{cost}</span>
-                    <span>{deadline}</span>
+            <Container className='w-75 d-flex align-items-center gap-1'>
+                <Col xs={9}>
+                    <Col ref={setNodeRef} style={style} {...attributes} {...listeners}
+                        className={`fs-3 mt-3 py-3 d-flex justify-content-evenly ${moreThan1000() ? "bg-warning" : "container-task"}`}
+                    >
+                            <span>{props.name}</span>
+                            <span>{cost}</span>
+                            <span>{deadline}</span>
+                    </Col>
                 </Col>
-                <Col xs={2}>
-                    <Button onClick={() => setIsEditClicked(!editClicked)} className='me-3 btn-primary'><i className="bi bi-pencil-square fs-5" /></Button>
-                    <Button onClick={() => setShowDeleteModal(true)} className='btn-danger'><i className="bi bi-x-square fs-5" /></Button>
-                </Col>
-                <Col className='d-flex justify-content-end' xs={1}>
-                    {props.tasks.findIndex(task => task.id === props.id) !== 0 && (
-                        <span onClick={handleMoveUp}><i className="bi bi-arrow-up-short fs-3"></i></span>
-                    )}
-                    {props.tasks.findIndex(task => task.id === props.id) !== props.tasks.length - 1 ?
-                        <span onClick={handleMoveDown}><i className="bi bi-arrow-down-short fs-3"></i></span>
-                        :
-                        <span style={{ width: '28px' }}></span>
-                    }
+
+                <Col xs={3} className={`px-2 mt-3 py-3 fs-4 d-flex align-items-center ${moreThan1000() ? "bg-warning" : "container-task"}`}>
+                    <Col xs={9}>
+                        <Button onClick={() => setIsEditClicked(!editClicked)} className='me-3 btn-primary'><i className="bi bi-pencil-square fs-5" /></Button>
+                        <Button onClick={() => setShowDeleteModal(true)} className='btn-danger'><i className="bi bi-x-square fs-5" /></Button>
+                    </Col>
+                    <Col className='d-flex justify-content-end' xs={3}>
+                        {props.tasks.findIndex(task => task.id === props.id) !== 0 && (
+                            <span onClick={handleMoveUp}><i className="bi bi-arrow-up-short fs-3"></i></span>
+                        )}
+                        {props.tasks.findIndex(task => task.id === props.id) !== props.tasks.length - 1 ?
+                            <span onClick={handleMoveDown}><i className="bi bi-arrow-down-short fs-3"></i></span>
+                            :
+                            <span style={{ width: '28px' }}></span>
+                        }
+                    </Col>
                 </Col>
             </Container>
         
