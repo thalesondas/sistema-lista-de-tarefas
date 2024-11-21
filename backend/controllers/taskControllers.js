@@ -84,5 +84,28 @@ module.exports = {
         console.error('Erro ao atualizar ordem:', error);
         return res.status(500).json({ error: 'Erro no servidor' });
     }
+  },
+
+  async updateOrderDragAndDrop(req, res) {
+    const tasks = req.body; // Array de tarefas com as ordens atualizadas
+
+    if (!tasks || !Array.isArray(tasks)) {
+        return res.status(400).json({ error: 'Dados inválidos' });
+    }
+
+    try {
+        // Atualizar cada tarefa
+        for (const task of tasks) {
+            await Task.update(
+                { order: task.order },
+                { where: { id: task.id } }
+            );
+        }
+
+        res.status(200).json({ message: 'Ordens atualizadas com sucesso.' });
+    } catch (error) {
+        console.error('Erro ao atualizar as ordens:', error);
+        res.status(500).json({ error: 'Erro ao atualizar as ordens no servidor.' });
+    }
   }
 };

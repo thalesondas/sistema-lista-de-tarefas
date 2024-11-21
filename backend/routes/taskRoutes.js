@@ -3,6 +3,7 @@ const router = express.Router();
 const taskController = require("../controllers/taskControllers.js");
 
 router.patch("/updateOrder", taskController.updateOrder);
+router.post("/updateOrderDragAndDrop", taskController.updateOrderDragAndDrop);
 router.get("/", taskController.getAllTasks);
 router.post("/", taskController.createTask);
 router.patch("/:id", taskController.updateTask);

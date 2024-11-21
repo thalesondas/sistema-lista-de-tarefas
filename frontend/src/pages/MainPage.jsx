@@ -31,6 +31,13 @@ const MainPage = () => {
         status: ''
     });
 
+    const arrayMove = (array, fromIndex, toIndex) => {
+        const newArray = [...array];
+        const [movedItem] = newArray.splice(fromIndex, 1);
+        newArray.splice(toIndex, 0, movedItem);
+        return newArray;
+    };
+
     const handleFormChange = (ev) => {
         setAddForm({
             ...addForm,
@@ -61,32 +68,29 @@ const MainPage = () => {
     // Drag and drop
     const handleDragEnd = async (ev) => {
         const { active, over } = ev;
-
+    
         if (!over || active.id === over.id) return;
-
-        const oldIndex = tasks.findIndex((task) => task.id === active.id);
-        const newIndex = tasks.findIndex((task) => task.id === over.id);
-
-        if (oldIndex === -1 || newIndex === -1) return;
-
-        const newTasks = arrayMove(tasks, oldIndex, newIndex);
-
-        // Atualizar localmente a ordem
-        setTasks(newTasks);
-
-        // Enviar para o backend a nova ordem
+    
+        // Reorganiza as tarefas no array
+        const oldIndex = tasks.findIndex(task => task.id === active.id);
+        const newIndex = tasks.findIndex(task => task.id === over.id);
+        const updatedTasks = arrayMove(tasks, oldIndex, newIndex);
+    
+        // Atualiza as ordens localmente
+        const reorderedTasks = updatedTasks.map((task, index) => ({
+            ...task,
+            order: index + 1 // Ordem começa em 1
+        }));
+    
+        setTasks(reorderedTasks);
+    
+        // Envia a lista atualizada para o backend
         try {
-            await axios.patch('http://localhost:5000/updateOrder', {
-                tasks: newTasks.map(({ id, order }, index) => ({
-                    id,
-                    order: index,
-                })),
-            });
+            await axios.post('http://localhost:5000/updateOrderDragAndDrop', reorderedTasks);
         } catch (error) {
-            console.error('Erro ao atualizar a ordem no backend:', error);
+            console.error('Erro ao atualizar as ordens no backend:', error);
         }
     };
-
 
     return(
         <Container className='container-base d-flex flex-column justify-content-start align-items-center'>
@@ -97,6 +101,7 @@ const MainPage = () => {
                 <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
                     {tasks.map((task, index) => (
                         <Task
+                            index={index}
                             key={task.id}
                             id={task.id}
                             name={task.name}

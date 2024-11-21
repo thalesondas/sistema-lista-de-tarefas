@@ -37,6 +37,7 @@ const Task = (props) => {
         return props.cost >= 1000;
     };
 
+    // handle functions
     const handleFormChange = (ev) => {
         setForm({
             ...form,
