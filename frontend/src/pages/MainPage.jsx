@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { setAlert } from '../redux/alertSlice';
 import axios from 'axios';
 import Task from '../components/Task';
 import '../assets/MainPage.css';
@@ -20,6 +22,8 @@ const MainPage = () => {
 
         fetchTasks();
     }, []);
+
+    const dispatch = useDispatch();
 
     const [isAddClicked, setIsAddClicked] = useState(false);
     const [tasks, setTasks] = useState([]);
@@ -67,6 +71,7 @@ const MainPage = () => {
 
             setIsAddClicked(false);
         } catch (err) {
+            dispatch(setAlert({ message: 'Não podem ter duas tarefas com o mesmo nome' }));
             console.error('Erro ao adicionar a tarefa:', err);
         }
     };

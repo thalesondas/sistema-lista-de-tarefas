@@ -1,0 +1,7 @@
+.global-alert{
+    position: fixed;
+    top: 35px;
+    left: 55%;
+    transform: translateX(-55%);
+    z-index: 9999;
+}
