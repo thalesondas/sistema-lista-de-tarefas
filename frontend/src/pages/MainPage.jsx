@@ -52,8 +52,22 @@ const MainPage = () => {
     const handleSubmit = async (ev) => {
         ev.preventDefault();
 
+        // Data atual sem horas (para comparar apenas a data)
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+
+        const userDeadline = new Date(addForm.deadline);
+        userDeadline.setHours(userDeadline.getHours() + 3); //+3 pela diferença dos fusos horários de São Paulo para Greenwich e não dar erro
+        userDeadline.setHours(0, 0, 0, 0);
+
+        // Validação da data limite
+        if (userDeadline < currentDate) {
+            dispatch(setAlert({ message: 'A data limite não pode ser anterior à data atual' }));
+            return;
+        }
+
         const adjustedDeadline = new Date(addForm.deadline);
-        adjustedDeadline.setHours(adjustedDeadline.getHours() + 3);
+        adjustedDeadline.setHours(adjustedDeadline.getHours() + 3); //+3 pela diferença dos fusos horários de São Paulo para Greenwich e não dar erro
     
         try {
             const response = await axios.post('http://localhost:5000/', {
