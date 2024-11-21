@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { DndContext, closestCenter } from '@dnd-kit/core';
-import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import axios from 'axios';
 import Task from '../components/Task';
 import '../assets/MainPage.css';
@@ -47,9 +47,15 @@ const MainPage = () => {
 
     const handleSubmit = async (ev) => {
         ev.preventDefault();
+
+        const adjustedDeadline = new Date(addForm.deadline);
+        adjustedDeadline.setHours(adjustedDeadline.getHours() + 3);
     
         try {
-            const response = await axios.post('http://localhost:5000/', addForm);
+            const response = await axios.post('http://localhost:5000/', {
+                ...addForm,
+                deadline: adjustedDeadline
+            });
 
             setTasks([...tasks, response.data]);
 
