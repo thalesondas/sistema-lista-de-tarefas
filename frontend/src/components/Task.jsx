@@ -1,11 +1,15 @@
-import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import { useState } from 'react';
+import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { useDispatch } from 'react-redux';
+import { setAlert } from '../redux/alertSlice';
 import axios from 'axios';
 import '../assets/Task.css'
 
 const Task = (props) => {
+
+    const dispatch = useDispatch();
 
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
 
@@ -46,11 +50,29 @@ const Task = (props) => {
     };
 
     const handleUpdateTask = async () => {
+
+        // Data atual sem horas (para comparar apenas a data)
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+
+        const userDeadline = new Date(form.deadline);
+        userDeadline.setHours(userDeadline.getHours() + 3); //+3 pela diferença dos fusos horários de São Paulo para Greenwich e não dar erro
+        userDeadline.setHours(0, 0, 0, 0);
+
+        // Validação da data limite
+        if (userDeadline < currentDate) {
+            dispatch(setAlert({ message: 'A data limite não pode ser anterior à data atual' }));
+            return;
+        }
+
+        const adjustedDeadline = new Date(form.deadline);
+        adjustedDeadline.setHours(adjustedDeadline.getHours() + 3); //+3 pela diferença dos fusos horários de São Paulo para Greenwich e não dar erro
+
         try {
             await axios.patch(`http://localhost:5000/${props.id}`, {
                 name: form.name,
                 cost: form.cost,
-                deadline: form.deadline
+                deadline: adjustedDeadline
             });
 
             props.setTasks(prevTasks => prevTasks.map(task => 
