@@ -76,12 +76,17 @@ const Task = (props) => {
             });
 
             props.setTasks(prevTasks => prevTasks.map(task => 
-                task.id === props.id ? { ...task, ...form } : task
+                task.id === props.id ? { ...task, ...form, deadline: adjustedDeadline } : task
             ));
 
             setIsEditClicked(false);
-        } catch (error) {
-            console.error('Erro ao atualizar a tarefa:', error);
+        } catch (err) {
+            if (err.response.status === 500) {
+                dispatch(setAlert({ message: 'Já existe uma tarefa com este nome, escolha outro' }));
+            } else {
+                dispatch(setAlert({ message: 'Erro ao atualizar tarefa' }));
+            }
+            console.error('Erro ao atualizar tarefa:', err);
         }
     };
 

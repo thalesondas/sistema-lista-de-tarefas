@@ -31,8 +31,7 @@ const MainPage = () => {
     const [addForm, setAddForm] = useState({
         name: '',
         cost: '',
-        deadline: '',
-        status: ''
+        deadline: ''
     });
 
     const arrayMove = (array, fromIndex, toIndex) => {
@@ -69,6 +68,8 @@ const MainPage = () => {
         const adjustedDeadline = new Date(addForm.deadline);
         adjustedDeadline.setHours(adjustedDeadline.getHours() + 3); //+3 pela diferença dos fusos horários de São Paulo para Greenwich e não dar erro
     
+        console.log(adjustedDeadline)
+
         try {
             const response = await axios.post('http://localhost:5000/', {
                 ...addForm,
@@ -85,8 +86,12 @@ const MainPage = () => {
 
             setIsAddClicked(false);
         } catch (err) {
-            dispatch(setAlert({ message: 'Não podem ter duas tarefas com o mesmo nome' }));
-            console.error('Erro ao adicionar a tarefa:', err);
+            if (err.response.status === 500) {
+                dispatch(setAlert({ message: 'Já existe uma tarefa com este nome, escolha outro' }));
+            } else {
+                dispatch(setAlert({ message: 'Erro ao adicionar tarefa' }));
+            }
+            console.error('Erro ao adicionar tarefa:', err);
         }
     };
 
