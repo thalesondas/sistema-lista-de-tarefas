@@ -27,6 +27,7 @@ const MainPage = () => {
 
     const [isAddClicked, setIsAddClicked] = useState(false);
     const [tasks, setTasks] = useState([]);
+    const [editingTaskId, setEditingTaskId] = useState(null);
 
     const [addForm, setAddForm] = useState({
         name: '',
@@ -140,6 +141,8 @@ const MainPage = () => {
                             order={task.order}
                             tasks={tasks}
                             setTasks={setTasks}
+                            isEditing={editingTaskId === task.id}
+                            setEditingTaskId={setEditingTaskId}
                         />
                     ))}
                 </SortableContext>

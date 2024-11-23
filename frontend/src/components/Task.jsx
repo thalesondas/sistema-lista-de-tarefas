@@ -18,8 +18,17 @@ const Task = (props) => {
         transition,
     };
 
+    const handleEditClick = () => {
+        if (props.isEditing) {
+            // Fecha o modo de edição
+            props.setEditingTaskId(null);
+        } else {
+            // Abre o modo de edição para esta tarefa
+            props.setEditingTaskId(props.id);
+        }
+    };
+
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [editClicked, setIsEditClicked] = useState(false);
     const [form, setForm] = useState({
         name: props.name,
         cost: props.cost,
@@ -79,7 +88,6 @@ const Task = (props) => {
                 task.id === props.id ? { ...task, ...form, deadline: adjustedDeadline } : task
             ));
 
-            setIsEditClicked(false);
         } catch (err) {
             if (err.response.status === 500) {
                 dispatch(setAlert({ message: 'Já existe uma tarefa com este nome, escolha outro' }));
@@ -165,7 +173,7 @@ const Task = (props) => {
 
                 <Col xs={3} className={`px-2 mt-3 py-3 fs-4 d-flex align-items-center ${moreThan1000() ? "bg-warning" : "container-task"}`}>
                     <Col xs={9}>
-                        <Button onClick={() => setIsEditClicked(!editClicked)} className='me-3 btn-primary'><i className="bi bi-pencil-square fs-5" /></Button>
+                        <Button onClick={handleEditClick} className='me-3 btn-primary'><i className="bi bi-pencil-square fs-5" /></Button>
                         <Button onClick={() => setShowDeleteModal(true)} className='btn-danger'><i className="bi bi-x-square fs-5" /></Button>
                     </Col>
                     <Col className='d-flex justify-content-end' xs={3}>
@@ -181,7 +189,7 @@ const Task = (props) => {
                 </Col>
             </Container>
         
-            {editClicked && (
+            {props.isEditing && (
                 <Container className={`w-75 ${moreThan1000() ? "bg-warning" : "container-task"}`}>
                     <hr />
                     <Form.Group className='mt-4 mb-2 d-flex flex-row'>
@@ -209,7 +217,7 @@ const Task = (props) => {
                         </Col>
                         
                         <Col className='d-flex justify-content-start'>
-                            <Button className='btn-danger' onClick={() => setIsEditClicked(false)}>
+                            <Button className='btn-danger' onClick={() => props.setEditingTaskId(null)}>
                                 <i className="bi bi-x-square fs-5" />
                             </Button>
                         </Col>
@@ -225,7 +233,7 @@ const Task = (props) => {
                     <p>Tem certeza de que deseja excluir a tarefa "{props.name}"?</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+                    <Button variant="secondary" onClick={() => props.setEditingTaskId(null)}>
                         Cancelar
                     </Button>
                     <Button variant="danger" onClick={handleDeleteTask}>
