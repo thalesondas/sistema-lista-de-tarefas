@@ -16,3 +16,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: ff-libre-franklin;
+  src: url(../public/LibreFranklin-Regular.ttf);
+}
+.ff-libre-franklin{
+  font-family: ff-libre-franklin;
+}

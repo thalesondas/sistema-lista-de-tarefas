@@ -124,8 +124,8 @@ const MainPage = () => {
     };
 
     return(
-        <Container className='container-base d-flex flex-column justify-content-start align-items-center'>
-            <h1 className='py-4'>Desafio FATTO</h1>
+        <Container className='ff-libre-franklin container-base d-flex flex-column justify-content-start align-items-center'>
+            <h1 className='py-4 fw-bold'>Desafio FATTO</h1>
             <h2 className='pb-2'>Lista de Tarefas</h2>
             
             <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} >
