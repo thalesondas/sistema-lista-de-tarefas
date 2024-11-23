@@ -1,5 +1,13 @@
-.container-task{
-    background-color: #fbf7f6;
+.task-left{
+    border-radius: 15px 0 0 15px;
+}
+
+.task-right{
+    border-radius: 0 15px 15px 0;
+}
+
+.task-edit{
+    border-radius: 15px;
 }
 
 span i.bi-arrow-up-short:hover,

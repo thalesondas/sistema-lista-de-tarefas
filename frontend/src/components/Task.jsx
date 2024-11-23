@@ -163,7 +163,7 @@ const Task = (props) => {
             <Container className='w-75 d-flex align-items-center gap-1'>
                 <Col xs={9}>
                     <Col ref={setNodeRef} style={style} {...attributes} {...listeners}
-                        className={`fs-3 mt-3 py-3 d-flex justify-content-evenly ${moreThan1000() ? "bg-warning" : "container-task"}`}
+                        className={`fs-3 mt-3 py-3 d-flex justify-content-evenly border border-2 border-black rounded-start ${moreThan1000() ? "bg-warning" : "bg-white"}`}
                     >
                             <span>{props.name}</span>
                             <span>{cost}</span>
@@ -171,7 +171,7 @@ const Task = (props) => {
                     </Col>
                 </Col>
 
-                <Col xs={3} className={`px-2 mt-3 py-3 fs-4 d-flex align-items-center ${moreThan1000() ? "bg-warning" : "container-task"}`}>
+                <Col xs={3} className={`px-2 mt-3 py-3 fs-4 d-flex align-items-center border border-1 border-black rounded-end ${moreThan1000() ? "bg-warning" : "bg-white"}`}>
                     <Col xs={9}>
                         <Button onClick={handleEditClick} className='me-3 btn-primary'><i className="bi bi-pencil-square fs-5" /></Button>
                         <Button onClick={() => setShowDeleteModal(true)} className='btn-danger'><i className="bi bi-x-square fs-5" /></Button>
@@ -190,8 +190,8 @@ const Task = (props) => {
             </Container>
         
             {props.isEditing && (
-                <Container className={`w-75 ${moreThan1000() ? "bg-warning" : "container-task"}`}>
-                    <hr />
+                <Container className={`border border-2 border-black rounded w-75 ${moreThan1000() ? "bg-warning" : "bg-white"}`}>
+                    <h4 className='pt-1 d-flex justify-content-center'>Editar Tarefa</h4>
                     <Form.Group className='mt-4 mb-2 d-flex flex-row'>
                         <Col xs={4} className='px-2'>
                             <Form.Label className='fw-bold'>Nome</Form.Label>
