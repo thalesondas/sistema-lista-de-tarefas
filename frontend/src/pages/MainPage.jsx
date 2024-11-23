@@ -124,35 +124,15 @@ const MainPage = () => {
     };
 
     return(
-        <Container className='ff-libre-franklin container-base d-flex flex-column justify-content-start align-items-center'>
+        <Container className='ff-libre-franklin pb-5 container-base d-flex flex-column justify-content-start align-items-center'>
             <h1 className='py-4 fw-bold'>Desafio FATTO</h1>
             <h2 className='pb-2'>Lista de Tarefas</h2>
-            
-            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} >
-                <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
-                    {tasks.map((task, index) => (
-                        <Task
-                            index={index}
-                            key={task.id}
-                            id={task.id}
-                            name={task.name}
-                            cost={task.cost}
-                            deadline={task.deadline}
-                            order={task.order}
-                            tasks={tasks}
-                            setTasks={setTasks}
-                            isEditing={editingTaskId === task.id}
-                            setEditingTaskId={setEditingTaskId}
-                        />
-                    ))}
-                </SortableContext>
-            </DndContext>
 
             {isAddClicked ? 
             
-                <Container className='mb-5 mt-4 w-75 bg-white'>
+                <Container className='mt-4 w-75 bg-white border border-2 border-black rounded-4'>
 
-                    <h4 className='mt-2 d-flex justify-content-center'>Adicionar Nova Tarefa</h4>
+                    <h4 className='fw-bold mt-3 mb-3 d-flex justify-content-center'>Adicionar Nova Tarefa</h4>
 
                     <Form.Group className='my-2 d-flex flex-row' onSubmit={handleSubmit}>
                         <Col xs={4} className='px-2'>
@@ -188,10 +168,31 @@ const MainPage = () => {
 
                 </Container>
                 :
-                <Button className='btn-success w-25 py-2 mt-4 mb-5' onClick={() => setIsAddClicked(true)}>
+                <Button className='btn-success w-25 py-2 mt-4' onClick={() => setIsAddClicked(true)}>
                     <i className="bi bi-plus-square fs-4"></i>
                 </Button>
             }
+            
+            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} >
+                <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
+                    {tasks.map((task, index) => (
+                        <Task
+                            index={index}
+                            key={task.id}
+                            id={task.id}
+                            name={task.name}
+                            cost={task.cost}
+                            deadline={task.deadline}
+                            order={task.order}
+                            tasks={tasks}
+                            setTasks={setTasks}
+                            isEditing={editingTaskId === task.id}
+                            setEditingTaskId={setEditingTaskId}
+                        />
+                    ))}
+                </SortableContext>
+            </DndContext>
+
         </Container>
     )
 }

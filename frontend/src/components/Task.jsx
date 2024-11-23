@@ -163,7 +163,7 @@ const Task = (props) => {
             <Container className='w-75 d-flex align-items-center gap-1'>
                 <Col xs={9}>
                     <Col ref={setNodeRef} style={style} {...attributes} {...listeners}
-                        className={`fs-3 mt-3 py-3 d-flex justify-content-evenly border border-2 border-black rounded-start-4 ${moreThan1000() ? "bg-warning" : "bg-white"}`}
+                        className={`fs-5 mt-3 py-4 d-flex justify-content-evenly border border-2 border-black rounded-start-4 ${moreThan1000() ? "bg-warning" : "bg-white"}`}
                     >
                             <span>{props.name}</span>
                             <span>{cost}</span>
@@ -171,7 +171,7 @@ const Task = (props) => {
                     </Col>
                 </Col>
 
-                <Col xs={3} className={`px-2 mt-3 py-3 fs-4 d-flex align-items-center border border-1 border-black rounded-end-4 ${moreThan1000() ? "bg-warning" : "bg-white"}`}>
+                <Col xs={3} className={`px-2 mt-3 py-3 fs-4 d-flex align-items-center border border-2 border-black rounded-end-4 ${moreThan1000() ? "bg-warning" : "bg-white"}`}>
                     <Col xs={9}>
                         <Button onClick={handleEditClick} className='me-3 btn-primary'><i className="bi bi-pencil-square fs-5" /></Button>
                         <Button onClick={() => setShowDeleteModal(true)} className='btn-danger'><i className="bi bi-x-square fs-5" /></Button>
@@ -233,7 +233,7 @@ const Task = (props) => {
                     <p>Tem certeza de que deseja excluir a tarefa "{props.name}"?</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => props.setEditingTaskId(null)}>
+                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
                         Cancelar
                     </Button>
                     <Button variant="danger" onClick={handleDeleteTask}>
