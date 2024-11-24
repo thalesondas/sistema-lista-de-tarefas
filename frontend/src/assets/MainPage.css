@@ -36,3 +36,20 @@
 .btn-blue:hover{
     background-color: #4b62f3 !important;
 }
+
+.add-false {
+    opacity: 0;
+    height: 0;
+    padding: 0; /* Para garantir que não há espaço extra */
+    visibility: hidden;
+    overflow: hidden; /* Esconde o conteúdo extra */
+    transition: opacity 2s ease, height 2s ease, padding 2s ease;
+}
+
+.add-true {
+    opacity: 1;
+    height: auto; /* Permite que o conteúdo se ajuste à altura */
+    padding: 1rem; /* Ajuste o valor do padding conforme o seu layout */
+    visibility: visible;
+    transition: opacity 2s ease, height 2s ease, padding 2s ease;
+}

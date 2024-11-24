@@ -128,52 +128,49 @@ const MainPage = () => {
         <Container className="ff-libre-franklin pb-5 container-base d-flex flex-column justify-content-start align-items-center position-relative">
             <Image src={Logo} alt="FATTO Logo" className="fatto-logo position-absolute top-0 start-0 ms-5 mt-4"/>
             <h1 className="py-4 fw-bold text-center">Desafio FATTO</h1>
-            <h2 className='pb-2'>Lista de Tarefas</h2>
+            <h2 className='pb-2 mb-4'>Lista de Tarefas</h2>
 
-            {isAddClicked ? 
+            <Button className={`btn-green w-25 py-2 ${isAddClicked ? 'add-false' : 'add-true'}`} onClick={() => setIsAddClicked(true)}>
+                <i className="bi bi-plus-square fs-4"></i>
+            </Button>
             
-                <Container className='mt-4 w-75 bg-white border border-2 border-black rounded-4'>
+            <Container className={` w-75 bg-white border border-2 border-black rounded-4 ${isAddClicked ? 'add-true' : 'add-false'}`}>
 
-                    <h4 className='fw-bold mt-3 mb-3 d-flex justify-content-center'>Adicionar Nova Tarefa</h4>
+                <h4 className='fw-bold mt-3 mb-3 d-flex justify-content-center'>Adicionar Nova Tarefa</h4>
 
-                    <Form.Group className='my-2 d-flex flex-row' onSubmit={handleSubmit}>
-                        <Col xs={4} className='px-2'>
-                            <Form.Label className='fw-bold'>Nome</Form.Label>
-                            <Form.Control type='text' name='name' value={addForm.name} onChange={handleFormChange} />
-                        </Col>
+                <Form.Group className='my-2 d-flex flex-row' onSubmit={handleSubmit}>
+                    <Col xs={4} className='px-2'>
+                        <Form.Label className='fw-bold'>Nome</Form.Label>
+                        <Form.Control type='text' name='name' value={addForm.name} onChange={handleFormChange} />
+                    </Col>
 
-                        <Col xs={4} className='px-2'>
-                            <Form.Label className='fw-bold'>Custo</Form.Label>
-                            <Form.Control type='number' name='cost' value={addForm.cost} onChange={handleFormChange} />
-                        </Col>
+                    <Col xs={4} className='px-2'>
+                        <Form.Label className='fw-bold'>Custo</Form.Label>
+                        <Form.Control type='number' name='cost' value={addForm.cost} onChange={handleFormChange} />
+                    </Col>
 
-                        <Col xs={4} className='px-2'>
-                            <Form.Label className='fw-bold'>Data Limite</Form.Label>
-                            <Form.Control type='date' name='deadline' value={addForm.deadline} onChange={handleFormChange} />
-                        </Col>
+                    <Col xs={4} className='px-2'>
+                        <Form.Label className='fw-bold'>Data Limite</Form.Label>
+                        <Form.Control type='date' name='deadline' value={addForm.deadline} onChange={handleFormChange} />
+                    </Col>
 
-                    </Form.Group>
+                </Form.Group>
 
-                    <Row className='pt-1 pb-2'>
-                        <Col className='d-flex justify-content-end'>
-                            <Button className='btn-green' onClick={handleSubmit}>
-                                <i className="bi bi-plus-square fs-5" />
-                            </Button>
-                        </Col>
-                        
-                        <Col className='d-flex justify-content-start'>
-                            <Button className='btn-secondary' onClick={() => setIsAddClicked(false)}>
-                                <i class="bi bi-arrow-return-right"></i>
-                            </Button>
-                        </Col>
-                    </Row>
+                <Row className='pt-1 pb-2'>
+                    <Col className='d-flex justify-content-end'>
+                        <Button className='btn-green' onClick={handleSubmit}>
+                            <i className="bi bi-plus-square fs-5" />
+                        </Button>
+                    </Col>
+                    
+                    <Col className='d-flex justify-content-start'>
+                        <Button className='btn-secondary' onClick={() => setIsAddClicked(false)}>
+                            <i class="bi bi-arrow-return-right"></i>
+                        </Button>
+                    </Col>
+                </Row>
 
-                </Container>
-                :
-                <Button className='btn-green w-25 py-2 mt-4' onClick={() => setIsAddClicked(true)}>
-                    <i className="bi bi-plus-square fs-4"></i>
-                </Button>
-            }
+            </Container>
             
             <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} >
                 <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
