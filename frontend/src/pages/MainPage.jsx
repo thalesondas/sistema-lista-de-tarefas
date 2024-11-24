@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { setAlert } from '../redux/alertSlice';
 import axios from 'axios';
 import Task from '../components/Task';
+import Logo from '../images/fatto-logo.png';
 import '../assets/MainPage.css';
 
 const MainPage = () => {
@@ -124,8 +125,9 @@ const MainPage = () => {
     };
 
     return(
-        <Container className='ff-libre-franklin pb-5 container-base d-flex flex-column justify-content-start align-items-center'>
-            <h1 className='py-4 fw-bold'>Desafio FATTO</h1>
+        <Container className="ff-libre-franklin pb-5 container-base d-flex flex-column justify-content-start align-items-center position-relative">
+            <Image src={Logo} alt="FATTO Logo" className="fatto-logo position-absolute top-0 start-0 ms-5 mt-4"/>
+            <h1 className="py-4 fw-bold text-center">Desafio FATTO</h1>
             <h2 className='pb-2'>Lista de Tarefas</h2>
 
             {isAddClicked ? 
