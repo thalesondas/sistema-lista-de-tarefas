@@ -161,7 +161,7 @@ const MainPage = () => {
                         
                         <Col className='d-flex justify-content-start'>
                             <Button className='btn-secondary' onClick={() => setIsAddClicked(false)}>
-                                <i className="bi bi-x-square fs-5" />
+                                <i class="bi bi-arrow-return-right"></i>
                             </Button>
                         </Col>
                     </Row>

@@ -171,7 +171,7 @@ const Task = (props) => {
                     </Col>
                 </Col>
 
-                <Col xs={3} className={`px-2 mt-3 py-3 fs-4 d-flex align-items-center border border-2 border-black rounded-end-4 ${moreThan1000() ? "bg-warning" : "bg-white"}`}>
+                <Col xs={3} className={`mt-3 px-3 py-3 fs-4 d-flex align-items-center border border-2 border-black rounded-end-4 ${moreThan1000() ? "bg-warning" : "bg-white"}`}>
                     <Col xs={9}>
                         <Button onClick={handleEditClick} className='me-3 btn-primary'><i className="bi bi-pencil-square fs-5" /></Button>
                         <Button onClick={() => setShowDeleteModal(true)} className='btn-danger'><i className="bi bi-x-square fs-5" /></Button>
@@ -217,8 +217,8 @@ const Task = (props) => {
                         </Col>
                         
                         <Col className='d-flex justify-content-start'>
-                            <Button className='btn-danger' onClick={() => props.setEditingTaskId(null)}>
-                                <i className="bi bi-x-square fs-5" />
+                            <Button className='btn-secondary' onClick={() => props.setEditingTaskId(null)}>
+                                <i class="bi bi-arrow-return-right fs-5"></i>
                             </Button>
                         </Col>
                     </Row> 
@@ -232,12 +232,12 @@ const Task = (props) => {
                 <Modal.Body>
                     <p>Tem certeza de que deseja excluir a tarefa "{props.name}"?</p>
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer className='gap-2'>
                     <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
-                        Cancelar
+                        <i class="bi bi-arrow-return-right fs-5"></i>
                     </Button>
                     <Button variant="danger" onClick={handleDeleteTask}>
-                        Confirmar
+                        <i class="bi bi-check-lg fs-5"></i>
                     </Button>
                 </Modal.Footer>
             </Modal>
