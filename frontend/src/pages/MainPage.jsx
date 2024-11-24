@@ -156,7 +156,7 @@ const MainPage = () => {
 
                     <Row className='pt-1 pb-2'>
                         <Col className='d-flex justify-content-end'>
-                            <Button className='btn-success' onClick={handleSubmit}>
+                            <Button className='btn-green' onClick={handleSubmit}>
                                 <i className="bi bi-plus-square fs-5" />
                             </Button>
                         </Col>
@@ -170,7 +170,7 @@ const MainPage = () => {
 
                 </Container>
                 :
-                <Button className='btn-success w-25 py-2 mt-4' onClick={() => setIsAddClicked(true)}>
+                <Button className='btn-green w-25 py-2 mt-4' onClick={() => setIsAddClicked(true)}>
                     <i className="bi bi-plus-square fs-4"></i>
                 </Button>
             }

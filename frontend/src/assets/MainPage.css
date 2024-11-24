@@ -1,7 +1,7 @@
 .container-base{
     min-height: 100vh;
     min-width: 100vw;
-    background-color: #ca2b40;
+    background-color: #a10015;
 }
 
 .container-base h1,
@@ -11,4 +11,28 @@
 
 .fatto-logo{
     height: 130px;
+}
+
+.btn-green{
+    background-color: #205A28 !important;
+    border-color: #205A28 !important;
+}
+.btn-green:hover{
+    background-color: #35813f !important;
+}
+
+.btn-red{
+    background-color: #a10015 !important;
+    border-color: #a10015 !important;
+}
+.btn-red:hover{
+    background-color: #be2a3e !important;
+}
+
+.btn-blue{
+    background-color: #001cd1 !important;
+    border-color: #001cd1 !important;
+}
+.btn-blue:hover{
+    background-color: #4b62f3 !important;
 }

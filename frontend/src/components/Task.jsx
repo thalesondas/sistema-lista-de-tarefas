@@ -173,8 +173,8 @@ const Task = (props) => {
 
                 <Col xs={3} className={`mt-3 px-3 py-3 fs-4 d-flex align-items-center border border-2 border-black rounded-end-4 ${moreThan1000() ? "bg-warning" : "bg-white"}`}>
                     <Col xs={9}>
-                        <Button onClick={handleEditClick} className='me-3 btn-primary'><i className="bi bi-pencil-square fs-5" /></Button>
-                        <Button onClick={() => setShowDeleteModal(true)} className='btn-danger'><i className="bi bi-x-square fs-5" /></Button>
+                        <Button onClick={handleEditClick} className='me-3 btn-blue'><i className="bi bi-pencil-square fs-5" /></Button>
+                        <Button onClick={() => setShowDeleteModal(true)} className='btn-red'><i className="bi bi-x-square fs-5" /></Button>
                     </Col>
                     <Col className='d-flex justify-content-end' xs={3}>
                         {props.tasks.findIndex(task => task.id === props.id) !== 0 && (
@@ -211,7 +211,7 @@ const Task = (props) => {
 
                     <Row className='pt-1 pb-2'>
                         <Col className='d-flex justify-content-end'>
-                            <Button className='btn-success' onClick={handleUpdateTask}>
+                            <Button className='btn-green' onClick={handleUpdateTask}>
                                 <i className="bi bi-plus-square fs-5" />
                             </Button>
                         </Col>
@@ -236,7 +236,7 @@ const Task = (props) => {
                     <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
                         <i class="bi bi-arrow-return-right fs-5"></i>
                     </Button>
-                    <Button variant="danger" onClick={handleDeleteTask}>
+                    <Button className='btn-red' onClick={handleDeleteTask}>
                         <i class="bi bi-check-lg fs-5"></i>
                     </Button>
                 </Modal.Footer>
