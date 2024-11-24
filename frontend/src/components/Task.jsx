@@ -189,41 +189,41 @@ const Task = (props) => {
                 </Col>
             </Container>
         
-            {props.isEditing && (
-                <Container className={`border border-2 border-black rounded-4 w-75 ${moreThan1000() ? "bg-warning" : "bg-white"}`}>
-                    <h4 className='fw-bold pt-1 d-flex justify-content-center'>Editar Tarefa</h4>
-                    <Form.Group className='mt-4 mb-2 d-flex flex-row'>
-                        <Col xs={4} className='px-2'>
-                            <Form.Label className='fw-bold'>Nome</Form.Label>
-                            <Form.Control type='text' name='name' value={form.name} onChange={handleFormChange} />
-                        </Col>
+            <Container
+                className={`border border-2 border-black rounded-4 w-75 ${props.isEditing ? 'edit-true' : 'edit-false'} ${moreThan1000() ? "bg-warning" : "bg-white"}`}
+            >
+                <h4 className='fw-bold pt-1 d-flex justify-content-center'>Editar Tarefa</h4>
+                <Form.Group className='mt-4 mb-2 d-flex flex-row'>
+                    <Col xs={4} className='px-2'>
+                        <Form.Label className='fw-bold'>Nome</Form.Label>
+                        <Form.Control type='text' name='name' value={form.name} onChange={handleFormChange} />
+                    </Col>
 
-                        <Col xs={4} className='px-2'>
-                            <Form.Label className='fw-bold'>Custo</Form.Label>
-                            <Form.Control type='number' name='cost' value={form.cost} onChange={handleFormChange} />
-                        </Col>
+                    <Col xs={4} className='px-2'>
+                        <Form.Label className='fw-bold'>Custo</Form.Label>
+                        <Form.Control type='number' name='cost' value={form.cost} onChange={handleFormChange} />
+                    </Col>
 
-                        <Col xs={4} className='px-2'>
-                            <Form.Label className='fw-bold'>Data Limite</Form.Label>
-                            <Form.Control type='date' name='deadline' value={form.deadline} onChange={handleFormChange} />
-                        </Col>
-                    </Form.Group>
+                    <Col xs={4} className='px-2'>
+                        <Form.Label className='fw-bold'>Data Limite</Form.Label>
+                        <Form.Control type='date' name='deadline' value={form.deadline} onChange={handleFormChange} />
+                    </Col>
+                </Form.Group>
 
-                    <Row className='pt-1 pb-2'>
-                        <Col className='d-flex justify-content-end'>
-                            <Button className='btn-green' onClick={handleUpdateTask}>
-                                <i className="bi bi-plus-square fs-5" />
-                            </Button>
-                        </Col>
-                        
-                        <Col className='d-flex justify-content-start'>
-                            <Button className='btn-secondary' onClick={() => props.setEditingTaskId(null)}>
-                                <i class="bi bi-arrow-return-right fs-5"></i>
-                            </Button>
-                        </Col>
-                    </Row> 
-                </Container>   
-            )}
+                <Row className='pt-1 pb-2'>
+                    <Col className='d-flex justify-content-end'>
+                        <Button className='btn-green' onClick={handleUpdateTask}>
+                            <i className="bi bi-plus-square fs-5" />
+                        </Button>
+                    </Col>
+                    
+                    <Col className='d-flex justify-content-start'>
+                        <Button className='btn-secondary' onClick={() => props.setEditingTaskId(null)}>
+                            <i class="bi bi-arrow-return-right fs-5"></i>
+                        </Button>
+                    </Col>
+                </Row> 
+            </Container>   
 
             <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
                 <Modal.Header closeButton>

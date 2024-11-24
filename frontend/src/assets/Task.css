@@ -15,3 +15,21 @@ span i.bi-arrow-down-short:hover{
     color: grey;
     cursor: pointer;
 }
+
+.edit-false {
+    opacity: 0;
+    max-height: 0;
+    padding: 0;
+    visibility: visible;
+    overflow: hidden;
+    transition: opacity 1s ease, max-height 1s linear, padding 0.6s linear;
+}
+
+.edit-true {
+    opacity: 1;
+    max-height: 500px;
+    padding: 1rem;
+    visibility: visible;
+    overflow: hidden;
+    transition: opacity 1s ease, max-height 1s linear, padding 0.6s linear;
+}
