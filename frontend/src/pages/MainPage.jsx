@@ -8,6 +8,7 @@ import axios from 'axios';
 import Task from '../components/Task';
 import Logo from '../images/fatto-logo.png';
 import '../assets/MainPage.css';
+import Aos from 'aos';
 
 const MainPage = () => {
     
@@ -124,13 +125,18 @@ const MainPage = () => {
         }
     };
 
+    // Para o botão de adicionar não sumir na mudança de estado
+    useEffect(() => {
+        Aos.refresh();
+    }, [isAddClicked]);
+
     return(
         <Container className="ff-libre-franklin pb-5 container-base d-flex flex-column justify-content-start align-items-center position-relative">
-            <Image src={Logo} alt="FATTO Logo" className="fatto-logo position-absolute top-0 start-0 ms-5 mt-4"/>
-            <h1 className="py-4 fw-bold text-center">Desafio FATTO</h1>
-            <h2 className='pb-2 mb-4'>Lista de Tarefas</h2>
+            <Image src={Logo} alt="FATTO Logo" className="fatto-logo position-absolute top-0 start-0 ms-5 mt-4" data-aos='fade-up' data-aos-duration="2000"/>
+            <h1 className='py-4 fw-bold text-center' data-aos='fade-left' data-aos-duration="2000">Desafio FATTO</h1>
+            <h2 className='pb-2 mb-4' data-aos='fade-right' data-aos-duration="3000">Lista de Tarefas</h2>
 
-            <Button className={`btn-green w-25 py-2 ${isAddClicked ? 'add-false' : 'add-true'}`} onClick={() => setIsAddClicked(true)}>
+            <Button data-aos='fade-left' data-aos-duration="2500" className={`btn-green w-25 py-2 ${isAddClicked ? 'add-false' : 'add-true'}`} onClick={() => setIsAddClicked(true)}>
                 <i className="bi bi-plus-square fs-4"></i>
             </Button>
             
