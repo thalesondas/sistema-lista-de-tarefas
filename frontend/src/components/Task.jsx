@@ -88,6 +88,8 @@ const Task = (props) => {
                 task._id === props._id ? { ...task, ...form, deadline: adjustedDeadline } : task
             ));
 
+            props.setEditingTaskId(null);
+
         } catch (err) {
             if (err.response.status === 500) {
                 dispatch(setAlert({ message: 'Já existe uma tarefa com este nome, escolha outro' }));
