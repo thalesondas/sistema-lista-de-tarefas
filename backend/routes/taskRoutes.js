@@ -4,9 +4,9 @@ const taskController = require("../controllers/taskControllers.js");
 
 router.patch("/updateOrder", taskController.updateOrder);
 router.post("/updateOrderDragAndDrop", taskController.updateOrderDragAndDrop);
-router.get("/", taskController.getAllTasks);
-router.post("/", taskController.createTask);
-router.patch("/:_id", taskController.updateTask);
-router.delete("/:_id", taskController.deleteTask);
+router.get("/tasks", taskController.getAllTasks);
+router.post("/tasks", taskController.createTask);
+router.patch("/tasks/:_id", taskController.updateTask);
+router.delete("/tasks/:_id", taskController.deleteTask);
 
 module.exports = router;
