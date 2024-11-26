@@ -1,28 +1,14 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Task extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  Task.init({
-    name: DataTypes.STRING,
-    cost: DataTypes.FLOAT,
-    deadline: DataTypes.DATE,
-    order: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Task',
-    tableName: 'Tasks',
-    timestamps: false
-  });
-  return Task;
-};
+const mongoose = require('mongoose');
+
+const taskSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  cost: { type: Number, required: true }, 
+  deadline: { type: Date, required: true },
+  order: { type: Number, required: true }
+}, {
+  timestamps: false
+});
+
+const Task = mongoose.model('Task', taskSchema, 'task');
+
+module.exports = Task;

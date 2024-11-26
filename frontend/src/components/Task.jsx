@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -11,7 +11,7 @@ const Task = (props) => {
 
     const dispatch = useDispatch();
 
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props._id });
 
     const style = {
         transform: CSS.Transform.toString(transform),
@@ -24,7 +24,7 @@ const Task = (props) => {
             props.setEditingTaskId(null);
         } else {
             // Abre o modo de edição para esta tarefa
-            props.setEditingTaskId(props.id);
+            props.setEditingTaskId(props._id);
         }
     };
 
@@ -78,14 +78,14 @@ const Task = (props) => {
         adjustedDeadline.setHours(adjustedDeadline.getHours() + 3); //+3 pela diferença dos fusos horários de São Paulo para Greenwich e não dar erro
 
         try {
-            await axios.patch(`http://localhost:5000/${props.id}`, {
+            await axios.patch(`http://localhost:3001/${props._id}`, {
                 name: form.name,
                 cost: form.cost,
                 deadline: adjustedDeadline
             });
 
             props.setTasks(prevTasks => prevTasks.map(task => 
-                task.id === props.id ? { ...task, ...form, deadline: adjustedDeadline } : task
+                task._id === props._id ? { ...task, ...form, deadline: adjustedDeadline } : task
             ));
 
         } catch (err) {
@@ -100,9 +100,9 @@ const Task = (props) => {
 
     const handleDeleteTask = async () => {
         try {
-            await axios.delete(`http://localhost:5000/${props.id}`);
+            await axios.delete(`http://localhost:3001/${props._id}`);
             
-            props.setTasks(prevTasks => prevTasks.filter(task => task.id !== props.id));
+            props.setTasks(prevTasks => prevTasks.filter(task => task._id !== props._id));
 
             setShowDeleteModal(false);
         } catch (error) {
@@ -113,7 +113,7 @@ const Task = (props) => {
     const handleMoveUp = async () => {
         try{
             // Encontrando a tarefa anterior
-            const currentIndex = props.tasks.findIndex(task => task.id === props.id);
+            const currentIndex = props.tasks.findIndex(task => task._id === props._id);
             const previousTask = props.tasks[currentIndex - 1];
 
             // Trocando os valores de ordem localmente
@@ -122,9 +122,9 @@ const Task = (props) => {
             updatedTasks[currentIndex - 1].order = props.order;
 
             // Atualizar no backend
-            await axios.patch('http://localhost:5000/updateOrder', {
-                currentId: props.id,
-                targetId: previousTask.id
+            await axios.patch('http://localhost:3001/updateOrder', {
+                currentId: props._id,
+                targetId: previousTask._id
             });
 
             // Atualizar o estado global
@@ -137,7 +137,7 @@ const Task = (props) => {
     const handleMoveDown = async () => {
         try {
             // Encontre a próxima tarefa
-            const currentIndex = props.tasks.findIndex(task => task.id === props.id);
+            const currentIndex = props.tasks.findIndex(task => task._id === props._id);
             const nextTask = props.tasks[currentIndex + 1];
             
             // Trocar os valores de ordem localmente
@@ -146,9 +146,9 @@ const Task = (props) => {
             updatedTasks[currentIndex + 1].order = props.order;
     
             // Atualizar o backend
-            await axios.patch('http://localhost:5000/updateOrder', {
-                currentId: props.id,
-                targetId: nextTask.id
+            await axios.patch('http://localhost:3001/updateOrder', {
+                currentId: props._id,
+                targetId: nextTask._id
             });
     
             // Atualizar o estado global
@@ -179,10 +179,10 @@ const Task = (props) => {
                         <Button onClick={() => setShowDeleteModal(true)} className='btn-red'><i className="bi bi-x-square fs-5" /></Button>
                     </Col>
                     <Col className='d-flex justify-content-end' xs={3}>
-                        {props.tasks.findIndex(task => task.id === props.id) !== 0 && (
+                        {props.tasks.findIndex(task => task._id === props._id) !== 0 && (
                             <span onClick={handleMoveUp}><i className="bi bi-arrow-up-short fs-3"></i></span>
                         )}
-                        {props.tasks.findIndex(task => task.id === props.id) !== props.tasks.length - 1 ?
+                        {props.tasks.findIndex(task => task._id === props._id) !== props.tasks.length - 1 ?
                             <span onClick={handleMoveDown}><i className="bi bi-arrow-down-short fs-3"></i></span>
                             :
                             <span style={{ width: '28px' }}></span>

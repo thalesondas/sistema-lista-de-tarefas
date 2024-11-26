@@ -15,7 +15,8 @@ const MainPage = () => {
     useEffect(() => {
         const fetchTasks = async() => {
             try{
-                const response = await axios.get('http://localhost:5000/');
+                const response = await axios.get('http://localhost:3001/');
+                console.log(response.data)
                 setTasks(response.data);
             } catch(err){
                 console.log(err);
@@ -74,7 +75,7 @@ const MainPage = () => {
         console.log(adjustedDeadline)
 
         try {
-            const response = await axios.post('http://localhost:5000/', {
+            const response = await axios.post('http://localhost:3001/', {
                 ...addForm,
                 deadline: adjustedDeadline
             });
@@ -102,11 +103,11 @@ const MainPage = () => {
     const handleDragEnd = async (ev) => {
         const { active, over } = ev;
     
-        if (!over || active.id === over.id) return;
+        if (!over || active._id === over._id) return;
     
         // Reorganiza as tarefas no array
-        const oldIndex = tasks.findIndex(task => task.id === active.id);
-        const newIndex = tasks.findIndex(task => task.id === over.id);
+        const oldIndex = tasks.findIndex(task => task._id === active._id);
+        const newIndex = tasks.findIndex(task => task._id === over._id);
         const updatedTasks = arrayMove(tasks, oldIndex, newIndex);
     
         // Atualiza as ordens localmente
@@ -119,7 +120,7 @@ const MainPage = () => {
     
         // Envia a lista atualizada para o backend
         try {
-            await axios.post('http://localhost:5000/updateOrderDragAndDrop', reorderedTasks);
+            await axios.post('http://localhost:3001/updateOrderDragAndDrop', reorderedTasks);
         } catch (error) {
             console.error('Erro ao atualizar as ordens no backend:', error);
         }
@@ -179,19 +180,19 @@ const MainPage = () => {
             </Container>
             
             <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} >
-                <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
+                <SortableContext items={tasks.map((task) => task._id)} strategy={verticalListSortingStrategy}>
                     {tasks.map((task, index) => (
                         <Task
                             index={index}
-                            key={task.id}
-                            id={task.id}
+                            key={task._id}
+                            _id={task._id}
                             name={task.name}
                             cost={task.cost}
                             deadline={task.deadline}
                             order={task.order}
                             tasks={tasks}
                             setTasks={setTasks}
-                            isEditing={editingTaskId === task.id}
+                            isEditing={editingTaskId === task._id}
                             setEditingTaskId={setEditingTaskId}
                         />
                     ))}
