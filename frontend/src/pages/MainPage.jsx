@@ -71,8 +71,6 @@ const MainPage = () => {
 
         const adjustedDeadline = new Date(addForm.deadline);
         adjustedDeadline.setHours(adjustedDeadline.getHours() + 3); //+3 pela diferença dos fusos horários de São Paulo para Greenwich e não dar erro
-    
-        console.log(adjustedDeadline)
 
         try {
             const response = await axios.post('http://localhost:3001/', {

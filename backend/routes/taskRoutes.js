@@ -6,7 +6,7 @@ router.patch("/updateOrder", taskController.updateOrder);
 router.post("/updateOrderDragAndDrop", taskController.updateOrderDragAndDrop);
 router.get("/", taskController.getAllTasks);
 router.post("/", taskController.createTask);
-router.patch("/:id", taskController.updateTask);
-router.delete("/:id", taskController.deleteTask);
+router.patch("/:_id", taskController.updateTask);
+router.delete("/:_id", taskController.deleteTask);
 
 module.exports = router;

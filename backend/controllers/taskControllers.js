@@ -53,12 +53,16 @@ module.exports = {
   async deleteTask(req, res) {
     try {
       const { _id } = req.params;
-      const task = await Task.findById(_id);
-      if (!task) return res.status(404).json({ error: "Tarefa não encontrada" });
+      
+      const task = await Task.findByIdAndDelete(_id);
+      
+      if (!task) {
+          return res.status(404).json({ error: "Tarefa não encontrada" });
+      }
 
-      await task.remove();
       res.json({ message: "Sucesso ao deletar tarefa" });
     } catch (error) {
+      console.error('Erro ao deletar tarefa:', error);
       res.status(500).json({ error: "Falha ao deletar tarefa" });
     }
   },
