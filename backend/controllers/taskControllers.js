@@ -105,19 +105,22 @@ module.exports = {
     const tasks = req.body; // Array de tarefas com as ordens atualizadas
 
     if (!tasks || !Array.isArray(tasks)) {
-      return res.status(400).json({ error: 'Dados inválidos' });
+        return res.status(400).json({ error: 'Dados inválidos' });
     }
 
     try {
-      // Atualizar cada tarefa
-      for (const task of tasks) {
-        await Task.findByIdAndUpdate(task._id, { order: task.order });
-      }
+        // Atualiza a ordem de todas as tarefas
+        const updatePromises = tasks.map(task => {
+            return Task.findByIdAndUpdate(task._id, { order: task.order });
+        });
 
-      res.status(200).json({ message: 'Ordens atualizadas com sucesso.' });
+        // Aguarda todas as atualizações
+        await Promise.all(updatePromises);
+
+        res.status(200).json({ message: 'Ordens atualizadas com sucesso.' });
     } catch (error) {
-      console.error('Erro ao atualizar as ordens:', error);
-      res.status(500).json({ error: 'Erro ao atualizar as ordens no servidor.' });
+        console.error('Erro ao atualizar as ordens:', error);
+        res.status(500).json({ error: 'Erro ao atualizar as ordens no servidor.' });
     }
   }
 };

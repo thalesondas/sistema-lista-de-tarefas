@@ -16,7 +16,6 @@ const MainPage = () => {
         const fetchTasks = async() => {
             try{
                 const response = await axios.get('http://localhost:3001/');
-                console.log(response.data)
                 setTasks(response.data);
             } catch(err){
                 console.log(err);
@@ -101,29 +100,32 @@ const MainPage = () => {
     const handleDragEnd = async (ev) => {
         const { active, over } = ev;
     
-        if (!over || active._id === over._id) return;
+        if (!over || active.id === over.id) return;
     
+        // Encontra os índices das tarefas
+        const oldIndex = tasks.findIndex(task => task._id === active.id);
+        const newIndex = tasks.findIndex(task => task._id === over.id);
+        
         // Reorganiza as tarefas no array
-        const oldIndex = tasks.findIndex(task => task._id === active._id);
-        const newIndex = tasks.findIndex(task => task._id === over._id);
         const updatedTasks = arrayMove(tasks, oldIndex, newIndex);
     
-        // Atualiza as ordens localmente
+        // Atualiza a ordem localmente
         const reorderedTasks = updatedTasks.map((task, index) => ({
             ...task,
-            order: index + 1 // Ordem começa em 1
+            order: index + 1 // A ordem começa em 1 (ou outro valor, se necessário)
         }));
     
+        // Atualiza o estado com a nova ordem
         setTasks(reorderedTasks);
     
-        // Envia a lista atualizada para o backend
+        // Envia a lista de tarefas com a nova ordem para o backend
         try {
             await axios.post('http://localhost:3001/updateOrderDragAndDrop', reorderedTasks);
         } catch (error) {
             console.error('Erro ao atualizar as ordens no backend:', error);
         }
     };
-
+    
     // Para o botão de adicionar não sumir na mudança de estado
     useEffect(() => {
         Aos.refresh();
