@@ -1,3 +1,7 @@
+# Link do Site
+
+[https://sistema-lista-de-tarefas-nine.vercel.app/](https://sistema-lista-de-tarefas-nine.vercel.app/)
+
 # Lista de Tarefas (Task List)
 
 Este é um projeto de gerenciamento de tarefas, onde você pode criar, editar, excluir e organizar suas tarefas de forma eficiente. O projeto é desenvolvido utilizando React no front-end, Node.js no back-end e PostgreSQL como banco de dados. O sistema inclui funcionalidades como drag-and-drop, edição de tarefas, validação de data limite, e muito mais!
@@ -5,11 +9,12 @@ Este é um projeto de gerenciamento de tarefas, onde você pode criar, editar, e
 ## Tecnologias Utilizadas
 - **React:** Framework JavaScript para construção da interface do usuário.
 - **Node.js:** Ambiente de execução JavaScript no back-end.
-- **PostgreSQL:** Banco de dados relacional utilizado para armazenar as tarefas.
-- **Sequelize:** ORM para facilitar a comunicação com o banco de dados.
+- **MongoDB:** Banco de dados NoSQL utilizado para armazenar as tarefas.
+- **Mongoose:** Biblioteca para modelagem de dados no MongoDB.
 - **React-Bootstrap:** Biblioteca de componentes UI responsivos.
-- **@dnd-kit/core:** Biblioteca para implementar a funcionalidade de drag-and-drop nas tarefas.
 - **Axios:** Biblioteca para realizar requisições HTTP no front-end.
+- **@dnd-kit/core:** Biblioteca para implementar a funcionalidade de drag-and-drop nas tarefas.
+- **AOS:** Biblioteca para animações ao rolar a página.
 
 ## Funcionalidades
 - **Criar Tarefa:** Adicione novas tarefas com nome, custo e data limite.
