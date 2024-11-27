@@ -124,7 +124,7 @@ const Task = (props) => {
             updatedTasks[currentIndex - 1].order = props.order;
 
             // Atualizar no backend
-            await axios.patch('https://sistema-lista-de-tarefas-server.vercel.app/', {
+            await axios.patch('https://sistema-lista-de-tarefas-server.vercel.app/updateOrder', {
                 currentId: props._id,
                 targetId: previousTask._id
             });
