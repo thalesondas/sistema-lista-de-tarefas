@@ -132,7 +132,7 @@ const MainPage = () => {
     }, [isAddClicked]);
 
     return(
-        <Container className="ff-libre-franklin pb-5 container-base d-flex flex-column justify-content-start align-items-center position-relative">
+        <Container className="ff-libre-franklin pb-3 container-base d-flex flex-column justify-content-start align-items-center position-relative">
             <Image src={Logo} alt="FATTO Logo" className="fatto-logo position-absolute top-0 start-0 ms-5 mt-4" data-aos='fade-up' data-aos-duration="2000"/>
             <h1 className='py-4 fw-bold text-center' data-aos='fade-left' data-aos-duration="2000">Desafio FATTO</h1>
             <h2 className='pb-2 mb-4' data-aos='fade-right' data-aos-duration="3000">Lista de Tarefas</h2>

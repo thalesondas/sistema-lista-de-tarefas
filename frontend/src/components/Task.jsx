@@ -162,8 +162,8 @@ const Task = (props) => {
 
     return(
         <>
-            <Container data-aos='fade-up' data-aos-anchor-placement="top-bottom" data-aos-duration="1200" className='w-75 d-flex align-items-center gap-1'>
-                <Col xs={9}>
+            <Container className='w-75 d-flex align-items-center gap-1'>
+                <Col xs={9} data-aos='fade-right' data-aos-anchor-placement="top-bottom" data-aos-duration="1200">
                     <Col ref={setNodeRef} style={style} {...attributes} {...listeners}
                         className={`fs-5 mt-3 py-4 d-flex justify-content-evenly border border-2 border-black rounded-start-4 ${moreThan1000() ? "bg-warning" : "bg-white"}`}
                     >
@@ -173,7 +173,7 @@ const Task = (props) => {
                     </Col>
                 </Col>
 
-                <Col xs={3} data-aos='fade-up' data-aos-anchor-placement="top-bottom" data-aos-duration="1200"
+                <Col xs={3} data-aos='fade-left' data-aos-anchor-placement="top-bottom" data-aos-duration="1200"
                     className={`mt-3 px-3 py-3 fs-4 d-flex align-items-center border border-2 border-black rounded-end-4 ${moreThan1000() ? "bg-warning" : "bg-white"}`}
                 >
                     <Col xs={9}>
