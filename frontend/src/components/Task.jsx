@@ -78,7 +78,7 @@ const Task = (props) => {
         adjustedDeadline.setHours(adjustedDeadline.getHours() + 3); //+3 pela diferença dos fusos horários de São Paulo para Greenwich e não dar erro
 
         try {
-            await axios.patch(`http://localhost:3001/${props._id}`, {
+            await axios.patch(`https://sistema-lista-de-tarefas-server.vercel.app/${props._id}`, {
                 name: form.name,
                 cost: form.cost,
                 deadline: adjustedDeadline
@@ -102,7 +102,7 @@ const Task = (props) => {
 
     const handleDeleteTask = async () => {
         try {
-            await axios.delete(`http://localhost:3001/${props._id}`);
+            await axios.delete(`https://sistema-lista-de-tarefas-server.vercel.app/${props._id}`);
             
             props.setTasks(prevTasks => prevTasks.filter(task => task._id !== props._id));
 
@@ -124,7 +124,7 @@ const Task = (props) => {
             updatedTasks[currentIndex - 1].order = props.order;
 
             // Atualizar no backend
-            await axios.patch('http://localhost:3001/updateOrder', {
+            await axios.patch('https://sistema-lista-de-tarefas-server.vercel.app/', {
                 currentId: props._id,
                 targetId: previousTask._id
             });
@@ -148,7 +148,7 @@ const Task = (props) => {
             updatedTasks[currentIndex + 1].order = props.order;
     
             // Atualizar o backend
-            await axios.patch('http://localhost:3001/updateOrder', {
+            await axios.patch('https://sistema-lista-de-tarefas-server.vercel.app/updateOrder', {
                 currentId: props._id,
                 targetId: nextTask._id
             });

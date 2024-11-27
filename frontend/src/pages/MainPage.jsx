@@ -15,7 +15,7 @@ const MainPage = () => {
     useEffect(() => {
         const fetchTasks = async() => {
             try{
-                const response = await axios.get('http://localhost:3001/');
+                const response = await axios.get('https://sistema-lista-de-tarefas-server.vercel.app/');
                 setTasks(response.data);
             } catch(err){
                 console.log(err);
@@ -72,7 +72,7 @@ const MainPage = () => {
         adjustedDeadline.setHours(adjustedDeadline.getHours() + 3); //+3 pela diferença dos fusos horários de São Paulo para Greenwich e não dar erro
 
         try {
-            const response = await axios.post('http://localhost:3001/', {
+            const response = await axios.post('https://sistema-lista-de-tarefas-server.vercel.app/', {
                 ...addForm,
                 deadline: adjustedDeadline
             });
@@ -120,7 +120,7 @@ const MainPage = () => {
     
         // Envia a lista de tarefas com a nova ordem para o backend
         try {
-            await axios.post('http://localhost:3001/updateOrderDragAndDrop', reorderedTasks);
+            await axios.post('https://sistema-lista-de-tarefas-server.vercel.app/updateOrderDragAndDrop', reorderedTasks);
         } catch (error) {
             console.error('Erro ao atualizar as ordens no backend:', error);
         }
