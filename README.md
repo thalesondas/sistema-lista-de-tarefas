@@ -20,6 +20,7 @@ Este é um projeto de gerenciamento de tarefas, onde você pode criar, editar, e
 - **Criar Tarefa:** Adicione novas tarefas com nome, custo e data limite.
 - **Editar Tarefa:** Altere o nome, custo e data limite de uma tarefa existente.
 - **Excluir Tarefa:** Remova tarefas que não são mais necessárias.
+- **Ordenação:** Organize as tarefas movendo-as para cima ou para baixo.
 - **Drag-and-Drop:** Organize as tarefas na lista com drag-and-drop utilizando a biblioteca @dnd-kit/core.
 - **Validação de Data:** Não é possível adicionar ou editar tarefas com datas passadas.
-- **Ordenação:** Organize as tarefas movendo-as para cima ou para baixo.
+- **Validação de Nomes Repetidos:** Não é possivel adicionar ou editar o nome da tarefa caso já tenha outra com o mesmo nome.
