@@ -1,4 +1,5 @@
 import MainPage from "./pages/MainPage";
+import Footer from "./components/Footer";
 import GlobalAlert from './components/GlobalAlert';
 import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -14,6 +15,7 @@ function App() {
     <Provider store={store}>
       <GlobalAlert />
       <MainPage />
+      <Footer />
     </Provider>
   );
 }

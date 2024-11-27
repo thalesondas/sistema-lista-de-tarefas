@@ -1,0 +1,10 @@
+footer{
+    min-height: 8vh;
+    background-color: #681e1e;
+    border-top: 1px solid black;
+}
+
+footer a{
+    text-decoration: none;
+    color: white;
+}
